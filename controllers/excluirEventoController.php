@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario'] != 'organizador') {
-    header("Location: login.php");
+    header("Location: ../views/login.php");
     exit;
 }
 
-require_once 'conexao.php';
+require_once '../config/conexao.php';
 
 // Verifica ID do evento a ser excluido
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['evento_id'])) {
@@ -18,8 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['evento_id'])) {
 
     if ($stmt->execute()) {
         echo "<p>Evento excluído com sucesso!</p>";
-        // Vai para a lista de eventos disponíveis
-        header("Location: lista_eventos.php");
+        header("Location: ../views/lista_eventos.php");
         exit;
     } else {
         echo "<p>Erro ao excluir evento: " . $conn->error . "</p>";

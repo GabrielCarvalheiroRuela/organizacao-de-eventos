@@ -17,7 +17,6 @@ $sql = "CREATE DATABASE IF NOT EXISTS $banco";
 
 // Executa a consulta para criar o banco de dados
 if ($conn->query($sql) === TRUE) {
-    // Conecta ao banco de dados
     $conn->select_db($banco);
 } else {
     echo "Erro ao criar banco de dados: " . $conn->error . "<br>";
