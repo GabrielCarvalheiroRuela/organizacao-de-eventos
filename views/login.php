@@ -1,3 +1,9 @@
+<?php
+session_start();
+$mensagem = isset($_SESSION['mensagem']) ? $_SESSION['mensagem'] : null;
+unset($_SESSION['mensagem']);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -94,8 +100,8 @@
     <div class="container">
         <h2>Login</h2>
 
-        <?php if (isset($mensagem)): ?>
-            <p><?php echo htmlspecialchars($mensagem); ?></p>
+        <?php if (!empty($mensagem)): ?>
+            <p style="color: red;"><?php echo htmlspecialchars($mensagem); ?></p>
         <?php endif; ?>
 
         <form action="../controllers/loginController.php" method="POST">

@@ -33,13 +33,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../views/lista_eventos.php");
                 exit;
             } else {
-                $mensagem = "Tipo de usuário inválido.";
+                $_SESSION['mensagem'] = "Tipo de usuário inválido.";
+                header("Location: ../views/login.php");
+                exit;
             }
         } else {
-            $mensagem = "Senha incorreta!";
+            $_SESSION['mensagem'] = "Senha incorreta!";
+            header("Location: ../views/login.php");
+            exit;
         }
     } else {
-        $mensagem = "Usuário não encontrado!";
+        $_SESSION['mensagem'] = "Usuário não encontrado!";
+        header("Location: ../views/login.php");
+        exit;
     }
 
     $stmt->close();

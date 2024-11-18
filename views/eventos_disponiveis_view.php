@@ -138,7 +138,9 @@ $eventos = getEventos();
                     <td>
                         <form action="../controllers/eventoInscricaoController.php" method="POST">
                             <input type="hidden" name="evento_id" value="<?php echo htmlspecialchars($evento['id']); ?>">
-                            <?php if ($evento['num_inscricoes'] < $evento['limite_inscricoes']): ?>
+                            <?php if ($evento['inscrito']): ?>
+                                <button type="submit" class="cancelar-inscricao">Cancelar Inscrição</button>
+                            <?php elseif ($evento['num_inscricoes'] < $evento['limite_inscricoes']): ?>
                                 <button type="submit">Inscrever-se</button>
                             <?php else: ?>
                                 <button type="submit" disabled>Lotado</button>

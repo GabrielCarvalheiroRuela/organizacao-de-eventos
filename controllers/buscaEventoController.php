@@ -1,19 +1,28 @@
 <?php
-// Função para buscar todos os eventos
+require_once '../config/conexao.php';
+
 function getEventos() {
-    require_once '../config/conexao.php';
+    global $conn;
 
-    $query = "SELECT id, titulo, data_evento, local, limite_inscricoes, num_inscricoes FROM eventos";
-    $result = $conn->query($query);
+    // ID do usuário logado
+    $usuario_id = $_SESSION['usuario_id'];
 
-    if (!$result) {
-        die("Erro ao executar a consulta: " . $conn->error);
+    $query = "SELECT e.*, 
+                     (SELECT COUNT(*) 
+                      FROM inscricoes i 
+                      WHERE i.evento_id = e.id AND i.usuario_id = ?) AS inscrito
+              FROM eventos e";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $usuario_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $eventos = [];
+    while ($row = $result->fetch_assoc()) {
+        $eventos[] = $row;
     }
 
-    $eventos = $result->fetch_all(MYSQLI_ASSOC);
-
-    $conn->close();
-
+    $stmt->close();
     return $eventos;
 }
-?>
+
